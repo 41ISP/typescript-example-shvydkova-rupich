@@ -1,11 +1,13 @@
-export const ExpenseCard = () => {
+import type { IExpense } from "../App"
+interface IExpenseCardProps extends IExpense {}
+export const ExpenseCard = ({id, name, amount, category}: IExpenseCardProps) => {
     return (
         <div className="expense">
             <div>
-                Lunch
-                <div className="category">Food</div>
+                {name}
+                <div className="category">{category}</div>
             </div>
-            <div className="amount">$12.50</div>
+            <div className="amount">${amount}</div>
         </div>
     )
 }
