@@ -1,26 +1,46 @@
-import type { Dispatch, SetStateAction } from "react"
+import { useEffect, type ChangeEvent, type Dispatch, type FormEvent, type SetStateAction } from "react"
 import type { IExpense } from "../App"
 
 export type TCategory = "food" | "transport" | "fun" | ""
 
-export interface IFormData extends Omit<IExpense, "id"> {}
+export interface IFormData extends Omit<IExpense, "id"> { }
 
 interface IFormProps {
     formData: IFormData,
-    setFormData: Dispatch<SetStateAction<IFormData>>
+    setFormData: Dispatch<SetStateAction<IFormData>>,
+    handleSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
-export const Form = ({formData, setFormData} : IFormProps) => {
+const categoriesButtons = [
+    [
+        "", "Select category"
+    ],
+    [
+        "food", "Food"
+    ],
+    [
+        "transport", "Transport"
+    ],
+    [
+        "fun", "Fun"
+    ]
+]
+export const Form = ({ formData, setFormData, handleSubmit }: IFormProps) => {
+    const handleFormChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+        const { name, value } = e.target
+        setFormData((old) => ({ ...old, [name]: value }))
+    }
+
+    useEffect(() => { console.log(formData) }, [formData])
     return (
-        <div className="form">
-            <input type="text" placeholder="Expense title" name="name" value={formData.name} />
-            <input type="number" placeholder="Amount" name="amount" value={formData.amount} />
-            <select name="category" value={formData.category}>
-                <option value="">Select category</option>
-                <option>Food</option>
-                <option>Transport</option>
-                <option>Fun</option>
+        <form onSubmit={handleSubmit} className="form">
+            <input onChange={handleFormChange} type="text" placeholder="Expense title" name="name" value={formData.name} />
+            <input onChange={handleFormChange} type="number" placeholder="Amount" name="amount" value={formData.amount} />
+            <select onChange={handleFormChange} name="category" value={formData.category}>
+             {categoriesButtons.map((el) => <option value={el[0]}>{el[1]}</option>)}
             </select>
             <button>Add Expense</button>
-        </div>
+        </form>
     )
 }
