@@ -24,6 +24,13 @@ const categoriesButtons = [
         "fun", "Fun"
     ]
 ]
+
+export const initialFormData = {
+    name: "",
+    amount: 0,
+    category: ""
+
+} as IFormData
 export const Form = ({ formData, setFormData, handleSubmit }: IFormProps) => {
     const handleFormChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -38,7 +45,7 @@ export const Form = ({ formData, setFormData, handleSubmit }: IFormProps) => {
             <input onChange={handleFormChange} type="text" placeholder="Expense title" name="name" value={formData.name} />
             <input onChange={handleFormChange} type="number" placeholder="Amount" name="amount" value={formData.amount} />
             <select onChange={handleFormChange} name="category" value={formData.category}>
-             {categoriesButtons.map((el) => <option value={el[0]}>{el[1]}</option>)}
+                {categoriesButtons.map((el) => <option value={el[0]}>{el[1]}</option>)}
             </select>
             <button>Add Expense</button>
         </form>

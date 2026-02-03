@@ -1,6 +1,8 @@
 import type { IExpense } from "../App"
-interface IExpenseCardProps extends IExpense {}
-export const ExpenseCard = ({id, name, amount, category}: IExpenseCardProps) => {
+interface IExpenseCardProps extends IExpense {
+    handleDelete: (id: number) => void
+}
+export const ExpenseCard = ({ id, name, amount, category, handleDelete}: IExpenseCardProps) => {
     return (
         <div className="expense">
             <div>
@@ -8,6 +10,7 @@ export const ExpenseCard = ({id, name, amount, category}: IExpenseCardProps) => 
                 <div className="category">{category}</div>
             </div>
             <div className="amount">${amount}</div>
+            <div onClick={() => handleDelete(id)}>x</div>
         </div>
     )
 }
